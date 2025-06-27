@@ -35,3 +35,13 @@ TypeError: a must be an integer
 
 >>> add_integer(-1, -2)
 -3
+
+>>> add_integer(float('inf'), float('-inf'))
+Traceback (most recent call last):
+    ...
+TypeError: a must be an integer
+
+>>> add_integer(float('nan'), float('inf'))
+Traceback (most recent call last):
+    ...
+TypeError: a must be an integer
