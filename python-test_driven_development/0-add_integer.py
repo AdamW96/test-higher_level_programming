@@ -3,6 +3,7 @@
 This module provides a function to add two integers.
 
 The function handles type checking and conversion from float to int.
+It validates inputs and raises appropriate exceptions for invalid types.
 """
 
 
@@ -32,19 +33,15 @@ def add_integer(a, b=98):
     if not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
 
-    # Handle special float values for 'a'
-    if isinstance(a, float):
-        if a != a:  # Check for NaN
-            raise TypeError("a must be an integer")
-        if a == float('inf') or a == float('-inf'):
-            raise TypeError("a must be an integer")
+    # Try to convert to integers, catch overflow/value errors
+    try:
+        a_int = int(a)
+    except (OverflowError, ValueError):
+        raise TypeError("a must be an integer")
 
-    # Handle special float values for 'b'
-    if isinstance(b, float):
-        if b != b:  # Check for NaN
-            raise TypeError("b must be an integer")
-        if b == float('inf') or b == float('-inf'):
-            raise TypeError("b must be an integer")
+    try:
+        b_int = int(b)
+    except (OverflowError, ValueError):
+        raise TypeError("b must be an integer")
 
-    # Convert to integers and return sum
-    return int(a) + int(b)
+    return a_int + b_int
