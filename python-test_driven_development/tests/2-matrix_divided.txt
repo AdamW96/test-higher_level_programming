@@ -10,7 +10,7 @@
 >>> matrix_divided([[1]], 1)
 [[1.0]]
 
->>> matrix_divided([[1, 2], [3, 4]], float(inf))
+>>> matrix_divided([[1, 2], [3, 4]], float('inf'))
 [[0.0, 0.0], [0.0, 0.0]]
 
 >>> matrix_divided([[1, 2, 3], [4, 5]], 2)
@@ -34,7 +34,11 @@ Traceback (most recent call last):
 TypeError: div must be a number
 
 >>> matrix_divided()
+Traceback (most recent call last):
+    ...
 TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
 
 >>> matrix_divided([[1, 2]])
+Traceback (most recent call last):
+    ...
 TypeError: matrix_divided() missing 1 required positional argument: 'div'
