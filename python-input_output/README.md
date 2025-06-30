@@ -1,0 +1,1 @@
+training for python input and output
