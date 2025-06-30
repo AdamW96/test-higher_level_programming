@@ -59,12 +59,11 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
             self.send_json_response(info_data)
 
         else:
-            # 404 for undefined endpoints
+            # 404 for undefined endpoints - return plain text
             self.send_response(404)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            error_response = {"error": "Endpoint not found"}
-            self.wfile.write(json.dumps(error_response).encode('utf-8'))
+            self.wfile.write(b"Endpoint not found")
 
     def send_json_response(self, data):
         """
@@ -81,9 +80,10 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """
-        Override to customize logging format.
+        Override to customize logging format or suppress logs.
         """
-        print(f"{self.address_string()} - [{self.log_date_time_string()}] {format % args}")
+        # Suppress default logging for cleaner output
+        pass
 
 
 def run_server(port=8000):
