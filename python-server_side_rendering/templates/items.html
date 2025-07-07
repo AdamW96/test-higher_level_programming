@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Items List - My Flask App</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h1>Items List</h1>
+
+    <!-- 条件语句：检查items列表是否为空 -->
+    {% if items %}
+        <!-- 如果有items，使用循环显示每个item -->
+        <p>Here are the available items:</p>
+        <ul>
+            {% for item in items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <p>Total items: {{ items|length }}</p>
+    {% else %}
+        <!-- 如果没有items，显示消息 -->
+        <p><strong>No items found</strong></p>
+    {% endif %}
+
+    <p><a href="/">← Back to Home</a></p>
+
+    {% include 'footer.html' %}
+</body>
+</html>
