@@ -184,7 +184,7 @@ class Rectangle(Base):
         Returns the area value of the Rectangle instance.
 
         The area of a rectangle is calculated as width * height.
-        Since width and height are always positive integers (due to validation),
+        Since width and height are always positive integers
         the result will always be a positive integer.
 
         Returns:
@@ -240,3 +240,34 @@ class Rectangle(Base):
         return "[Rectangle] ({}) {}/{} - {}/{}".format(
             self.id, self.x, self.y, self.width, self.height
         )
+
+    # ========================================================================
+    # Update method with *args
+    # ========================================================================
+
+    def update(self, *args):
+        """
+        Assigns an argument to each attribute using *args.
+
+        This method updates the Rectangle attributes based on the arguments
+        provided. The order of arguments is important:
+        - 1st argument: id attribute
+        - 2nd argument: width attribute
+        - 3rd argument: height attribute
+        - 4th argument: x attribute
+        - 5th argument: y attribute
+
+        Args:
+            *args: Variable length argument list in the specific order above
+
+        Example:
+            rect.update(89, 2, 3, 4, 5)
+            # Updates: id=89, width=2, height=3, x=4, y=5
+        """
+        # List of attribute names in the order they should be assigned
+        attributes = ["id", "width", "height", "x", "y"]
+
+        # Assign each argument to the corresponding attribute
+        for i, value in enumerate(args):
+            if i < len(attributes):
+                setattr(self, attributes[i], value)
