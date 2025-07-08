@@ -193,25 +193,33 @@ class Rectangle(Base):
         return self.width * self.height
 
     # ========================================================================
-    # Display method - SIMPLE VERSION (without x and y handling)
+    # Display method - IMPROVED VERSION (with x and y handling)
     # ========================================================================
 
     def display(self):
         """
         Prints the Rectangle instance with the character '#' to stdout.
 
-        This method prints a rectangle made of '#' characters.
-        The rectangle will have 'height' rows and 'width' columns.
-        This version does NOT handle x and y coordinates.
+        This method prints a rectangle made of '#' characters, taking care
+        of x and y coordinates:
+        - y: prints y empty lines before the rectangle
+        - x: prints x spaces before each row of '#' characters
 
         Example:
-            For Rectangle(4, 3), output will be:
-            ####
-            ####
-            ####
+            For Rectangle(2, 3, 2, 2), output will be:
+            (empty line)
+            (empty line)
+              ##
+              ##
+              ##
         """
+        # Print y empty lines for vertical offset
+        for i in range(self.y):
+            print()
+
+        # Print the rectangle with x spaces for horizontal offset
         for i in range(self.height):
-            print("#" * self.width)
+            print(" " * self.x + "#" * self.width)
 
     # ========================================================================
     # String representation method (__str__)
