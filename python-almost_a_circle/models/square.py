@@ -95,3 +95,44 @@ class Square(Rectangle):
         return "[Square] ({}) {}/{} - {}".format(
             self.id, self.x, self.y, self.width
         )
+
+    # ========================================================================
+    # Update method with *args and **kwargs (Square-specific)
+    # ========================================================================
+
+    def update(self, *args, **kwargs):
+        """
+        Assigns arguments to attributes using *args and **kwargs.
+
+        **kwargs will be ignored.
+
+        Args:
+            *args: Variable length argument list in order for Square:
+                   1st argument: id
+                   2nd argument: size
+                   3rd argument: x
+                   4th argument: y
+
+        Examples:
+            square.update(89, 2, 3, 4)  # Uses *args: id=89, size=2, x=3, y=4
+            square.update(size=10, x=20)  # Uses **kwargs: updates size and x
+            square.update(89, 2, size=10)  # Uses *args only, **kwargs ignored
+
+        Note:
+            This method overrides Rectangle's update() method because Square
+            has a different argument order (size instead of width/height).
+        """
+        if args:
+            # If args exist and is not empty, use *args and ignore **kwargs
+            # Square-specific attribute order: id, size, x, y
+            attributes = ["id", "size", "x", "y"]
+
+            # Assign each argument to the corresponding attribute
+            for i, value in enumerate(args):
+                if i < len(attributes):
+                    setattr(self, attributes[i], value)
+        else:
+            # If no args or args is empty, use **kwargs
+            for key, value in kwargs.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
