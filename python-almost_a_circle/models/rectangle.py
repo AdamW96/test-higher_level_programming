@@ -184,7 +184,7 @@ class Rectangle(Base):
         Returns the area value of the Rectangle instance.
 
         The area of a rectangle is calculated as width * height.
-        Since width and height are always positive integers
+        Since width and height are always positive integers (due to validation),
         the result will always be a positive integer.
 
         Returns:
@@ -260,7 +260,12 @@ class Rectangle(Base):
                    4th argument: x
                    5th argument: y
             **kwargs: Arbitrary keyword arguments for any attribute.
-                     Key represents the attribute name
+                     Key represents the attribute name, value represents the new value.
+
+        Examples:
+            rect.update(89, 2, 3, 4, 5)  # Uses *args, updates all attributes
+            rect.update(width=10, height=20)  # Uses **kwargs, updates width and height
+            rect.update(89, 2, width=10)  # Uses *args only, **kwargs ignored
         """
         if args:
             # If args exist and is not empty, use *args and ignore **kwargs
@@ -275,3 +280,35 @@ class Rectangle(Base):
             for key, value in kwargs.items():
                 if hasattr(self, key):
                     setattr(self, key, value)
+
+    # ========================================================================
+    # Dictionary representation method
+    # ========================================================================
+
+    def to_dictionary(self):
+        """
+        Returns the dictionary representation of Rectangle.
+
+        This method creates a dictionary containing all the Rectangle's
+        attributes. This is useful for:
+        - JSON serialization
+        - Creating copies of objects
+        - Updating other instances with the same attributes
+        - Data persistence
+
+        Returns:
+            dict: Dictionary containing Rectangle attributes with keys:
+                  'id', 'width', 'height', 'x', 'y'
+
+        Example:
+            rect = Rectangle(10, 2, 1, 9, 5)
+            dict_repr = rect.to_dictionary()
+            # Returns: {'id': 5, 'width': 10, 'height': 2, 'x': 1, 'y': 9}
+        """
+        return {
+            "id": self.id,
+            "width": self.width,
+            "height": self.height,
+            "x": self.x,
+            "y": self.y
+        }
