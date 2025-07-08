@@ -38,9 +38,6 @@ class Base:
     def to_json_string(list_dictionaries):
         """
         Returns JSON string representation of list_dictionaries
-
-        JSON is one of the standard formats for sharing data representation.
-        This method converts a list of dictionaries to a JSON string format
         that can be easily stored, transmitted, or processed.
 
         Args:
@@ -49,18 +46,37 @@ class Base:
         Returns:
             str: JSON string representation of the list
                  Returns "[]" if list_dictionaries is None or empty
-
-        Examples:
-            Base.to_json_string([{"id": 1, "name": "test"}])
-            # Returns: '[{"id": 1, "name": "test"}]'
-
-            Base.to_json_string([])
-            # Returns: "[]"
-
-            Base.to_json_string(None)
-            # Returns: "[]"
         """
         if list_dictionaries is None or len(list_dictionaries) == 0:
             return "[]"
         return json.dumps(list_dictionaries)
 
+    @classmethod
+    def save_to_file(cls, list_objs):
+        """
+        Writes the JSON string representation of list_objs to a file.
+
+        is automatically generated based on the class name. If the file
+        already exists, it will be overwritten.
+
+        Args:
+            list_objs (list): List of instances that inherit from Base
+                             If None, saves an empty list
+
+        File format:
+            The filename will be: <Class name>.json
+            Examples: Rectangle.json, Square.json
+        """
+        # Generate filename based on class name
+        filename = cls.__name__ + ".json"
+
+        # Open file for writing (overwrites if exists)
+        with open(filename, "w") as file:
+            if list_objs is None:
+                # If list_objs is None, save empty list
+                file.write("[]")
+            else:
+                # Convert each object to dictionary, then to JSON string
+                list_dictionaries = [obj.to_dictionary() for obj in list_objs]
+                json_string = cls.to_json_string(list_dictionaries)
+                file.write(json_string)
