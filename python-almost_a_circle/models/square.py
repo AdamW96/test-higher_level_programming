@@ -104,6 +104,7 @@ class Square(Rectangle):
         """
         Assigns arguments to attributes using *args and **kwargs.
 
+        *args takes precedence over **kwargs. If *args exists and is not empty,
         **kwargs will be ignored.
 
         Args:
@@ -136,15 +137,16 @@ class Square(Rectangle):
             for key, value in kwargs.items():
                 if hasattr(self, key):
                     setattr(self, key, value)
+
     # ========================================================================
-    # Dictionary representation method
+    # Dictionary representation method (Square-specific)
     # ========================================================================
 
     def to_dictionary(self):
         """
-        Returns the dictionary representation of Rectangle.
+        Returns the dictionary representation of Square.
 
-        This method creates a dictionary containing all the Rectangle's
+        This method creates a dictionary containing all the Square's
         attributes. This is useful for:
         - JSON serialization
         - Creating copies of objects
@@ -152,17 +154,21 @@ class Square(Rectangle):
         - Data persistence
 
         Returns:
-            dict: Dictionary containing Rectangle attributes with keys:
-                  'id', 'width', 'height', 'x', 'y'
+            dict: Dictionary containing Square attributes with keys:
+                  'id', 'size', 'x', 'y'
+
+        Note:
+            This method overrides Rectangle's to_dictionary() method because
+            Square uses 'size' instead of separate 'width' and 'height'.
 
         Example:
-            rect = Rectangle(10, 2, 1, 9, 5)
-            dict_repr = rect.to_dictionary()
+            square = Square(10, 2, 1, 5)
+            dict_repr = square.to_dictionary()
+            # Returns: {'id': 5, 'size': 10, 'x': 2, 'y': 1}
         """
         return {
             "id": self.id,
-            "width": self.width,
-            "height": self.height,
+            "size": self.size,
             "x": self.x,
             "y": self.y
         }
