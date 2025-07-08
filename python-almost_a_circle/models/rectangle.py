@@ -242,32 +242,41 @@ class Rectangle(Base):
         )
 
     # ========================================================================
-    # Update method with *args
+    # Update method with *args and **kwargs
     # ========================================================================
 
-    def update(self, *args):
+    def update(self, *args, **kwargs):
         """
-        Assigns an argument to each attribute using *args.
+        Assigns arguments to attributes using *args and **kwargs.
 
-        This method updates the Rectangle attributes based on the arguments
-        provided. The order of arguments is important:
-        - 1st argument: id attribute
-        - 2nd argument: width attribute
-        - 3rd argument: height attribute
-        - 4th argument: x attribute
-        - 5th argument: y attribute
+        *args takes precedence over **kwargs. If *args exists and is not empty,
+        **kwargs will be ignored.
 
         Args:
-            *args: Variable length argument list in the specific order above
+            *args: Variable length argument list in order:
+                   1st argument: id
+                   2nd argument: width
+                   3rd argument: height
+                   4th argument: x
+                   5th argument: y
+            **kwargs: Arbitrary keyword arguments for any attribute.
+                     Key represents the attribute name, value represents the new value.
 
-        Example:
-            rect.update(89, 2, 3, 4, 5)
-            # Updates: id=89, width=2, height=3, x=4, y=5
+        Examples:
+            rect.update(89, 2, 3, 4, 5)  # Uses *args, updates all attributes
+            rect.update(width=10, height=20)  # Uses **kwargs, updates width and height
+            rect.update(89, 2, width=10)  # Uses *args only, **kwargs ignored
         """
-        # List of attribute names in the order they should be assigned
-        attributes = ["id", "width", "height", "x", "y"]
+        if args:
+            # If args exist and is not empty, use *args and ignore **kwargs
+            attributes = ["id", "width", "height", "x", "y"]
 
-        # Assign each argument to the corresponding attribute
-        for i, value in enumerate(args):
-            if i < len(attributes):
-                setattr(self, attributes[i], value)
+            # Assign each argument to the corresponding attribute
+            for i, value in enumerate(args):
+                if i < len(attributes):
+                    setattr(self, attributes[i], value)
+        else:
+            # If no args or args is empty, use **kwargs
+            for key, value in kwargs.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
