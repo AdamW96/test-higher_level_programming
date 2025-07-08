@@ -260,12 +260,7 @@ class Rectangle(Base):
                    4th argument: x
                    5th argument: y
             **kwargs: Arbitrary keyword arguments for any attribute.
-                     Key represents the attribute name, value represents the new value.
-
-        Examples:
-            rect.update(89, 2, 3, 4, 5)  # Uses *args, updates all attributes
-            rect.update(width=10, height=20)  # Uses **kwargs, updates width and height
-            rect.update(89, 2, width=10)  # Uses *args only, **kwargs ignored
+                     Key represents the attribute name
         """
         if args:
             # If args exist and is not empty, use *args and ignore **kwargs
