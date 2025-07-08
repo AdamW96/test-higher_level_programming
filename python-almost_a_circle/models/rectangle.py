@@ -212,3 +212,23 @@ class Rectangle(Base):
         """
         for i in range(self.height):
             print("#" * self.width)
+
+    # ========================================================================
+    # String representation method (__str__)
+    # ========================================================================
+
+    def __str__(self):
+        """
+        Returns the string representation of Rectangle instance.
+
+        Format: [Rectangle] (<id>) <x>/<y> - <width>/<height>
+
+        Returns:
+            str: String representation of the Rectangle instance
+
+        Example:
+            Rectangle(4, 6, 2, 1, 12) returns "[Rectangle] (12) 2/1 - 4/6"
+        """
+        return "[Rectangle] ({}) {}/{} - {}/{}".format(
+            self.id, self.x, self.y, self.width, self.height
+        )
