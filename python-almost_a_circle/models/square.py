@@ -42,6 +42,44 @@ class Square(Rectangle):
         # Pass size for both width and height to make it a square
         super().__init__(size, size, x, y, id)
 
+    # ========================================================================
+    # Size property (getter and setter)
+    # ========================================================================
+
+    @property
+    def size(self):
+        """
+        Getter for size attribute.
+
+        Since a square has equal width and height, we can return either one.
+        We return width by convention.
+
+        Returns:
+            int: Size of the square (width or height, they're the same)
+        """
+        return self.width
+
+    @size.setter
+    def size(self, value):
+        """
+        Setter for size attribute with validation.
+
+        This setter assigns the same value to both width and height,
+        maintaining the square property. The validation is handled by
+        the Rectangle's width setter, so we get the same error messages.
+
+        Args:
+            value (int): Size value to set for both width and height
+
+        Raises:
+            TypeError: If value is not an integer (from width setter)
+            ValueError: If value is <= 0 (from width setter)
+        """
+        # Set width first (this will trigger validation)
+        self.width = value
+        # Set height to the same value
+        self.height = value
+
     def __str__(self):
         """
         Returns the string representation of Square instance.
