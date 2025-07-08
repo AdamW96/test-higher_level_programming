@@ -146,6 +146,52 @@ class Base:
         return dummy
 
     @classmethod
+    def load_from_file(cls):
+        """
+        Returns a list of instances loaded from a JSON file.
+
+        This method loads instances from a JSON file named after the class.
+        It reads the file, converts the JSON string to a list of dictionaries,
+        and then creates instances using the create method.
+
+        Returns:
+            list: List of instances of the calling class. If the file doesn't
+                  exist, returns an empty list.
+
+        File format:
+            The filename will be: <Class name>.json
+            Examples: Rectangle.json, Square.json
+
+        Examples:
+            rectangles = Rectangle.load_from_file()  # Loads from Rectangle.json
+            squares = Square.load_from_file()        # Loads from Square.json
+
+        Note:
+            This method uses from_json_string() to parse the JSON data and
+            create() to instantiate objects from dictionaries.
+        """
+        import os
+
+        # Generate filename based on class name
+        filename = cls.__name__ + ".json"
+
+        # Check if file exists
+        if not os.path.exists(filename):
+            return []
+
+        # Read file content
+        with open(filename, "r") as file:
+            json_string = file.read()
+
+        # Convert JSON string to list of dictionaries
+        list_dictionaries = cls.from_json_string(json_string)
+
+        # Create instances from dictionaries using create method
+        instances = [cls.create(**dictionary) for dictionary in list_dictionaries]
+
+        return instances
+
+    @classmethod
     def save_to_file(cls, list_objs):
         """
         Writes the JSON string representation of list_objs to a file.
@@ -163,6 +209,10 @@ class Base:
             The filename will be: <Class name>.json
             Examples: Rectangle.json, Square.json
 
+        Examples:
+            Rectangle.save_to_file([rect1, rect2])  # Creates Rectangle.json
+            Square.save_to_file([square1])          # Creates Square.json
+            Rectangle.save_to_file(None)            # Creates Rectangle.json with []
         """
         # Generate filename based on class name
         filename = cls.__name__ + ".json"
