@@ -38,6 +38,9 @@ class Base:
     def to_json_string(list_dictionaries):
         """
         Returns JSON string representation of list_dictionaries
+
+        JSON is one of the standard formats for sharing data representation.
+        This method converts a list of dictionaries to a JSON string format
         that can be easily stored, transmitted, or processed.
 
         Args:
@@ -46,26 +49,73 @@ class Base:
         Returns:
             str: JSON string representation of the list
                  Returns "[]" if list_dictionaries is None or empty
+
+        Examples:
+            Base.to_json_string([{"id": 1, "name": "test"}])
+            # Returns: '[{"id": 1, "name": "test"}]'
+
+            Base.to_json_string([])
+            # Returns: "[]"
+
+            Base.to_json_string(None)
+            # Returns: "[]"
         """
         if list_dictionaries is None or len(list_dictionaries) == 0:
             return "[]"
         return json.dumps(list_dictionaries)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """
+        Returns the list of the JSON string representation json_string.
+
+        This method is the reverse of to_json_string(). It converts a JSON
+        string back to a Python list of dictionaries. This is useful for
+        deserializing data that was previously saved or transmitted as JSON.
+
+        Args:
+            json_string (str): A string representing a list of dictionaries
+                              in JSON format
+
+        Returns:
+            list: List of dictionaries represented by json_string
+                  Returns empty list [] if json_string is None or empty
+
+        Examples:
+            Base.from_json_string('[{"id": 1, "name": "test"}]')
+            # Returns: [{"id": 1, "name": "test"}]
+
+            Base.from_json_string("[]")
+            # Returns: []
+
+            Base.from_json_string(None)
+            # Returns: []
+
+            Base.from_json_string("")
+            # Returns: []
+        """
+        if json_string is None or json_string == "":
+            return []
+        return json.loads(json_string)
 
     @classmethod
     def save_to_file(cls, list_objs):
         """
         Writes the JSON string representation of list_objs to a file.
 
+        This method saves a list of instances to a JSON file. The filename
         is automatically generated based on the class name. If the file
         already exists, it will be overwritten.
 
         Args:
             list_objs (list): List of instances that inherit from Base
+                             (e.g., list of Rectangle or Square instances)
                              If None, saves an empty list
 
         File format:
             The filename will be: <Class name>.json
             Examples: Rectangle.json, Square.json
+
         """
         # Generate filename based on class name
         filename = cls.__name__ + ".json"
