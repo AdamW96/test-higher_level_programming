@@ -176,7 +176,7 @@ class Rectangle(Base):
         self.__y = value
 
     # ========================================================================
-    # Area method - NEW PUBLIC METHOD
+    # Area method
     # ========================================================================
 
     def area(self):
@@ -191,3 +191,24 @@ class Rectangle(Base):
             int: The area of the rectangle (width * height)
         """
         return self.width * self.height
+
+    # ========================================================================
+    # Display method - SIMPLE VERSION (without x and y handling)
+    # ========================================================================
+
+    def display(self):
+        """
+        Prints the Rectangle instance with the character '#' to stdout.
+
+        This method prints a rectangle made of '#' characters.
+        The rectangle will have 'height' rows and 'width' columns.
+        This version does NOT handle x and y coordinates.
+
+        Example:
+            For Rectangle(4, 3), output will be:
+            ####
+            ####
+            ####
+        """
+        for i in range(self.height):
+            print("#" * self.width)
