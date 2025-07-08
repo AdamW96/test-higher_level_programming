@@ -99,6 +99,53 @@ class Base:
         return json.loads(json_string)
 
     @classmethod
+    def create(cls, **dictionary):
+        """
+        Returns an instance with all attributes already set.
+
+        This method creates a new instance of the calling class and sets all
+        its attributes using the provided dictionary. It uses a "dummy" instance
+        approach: first creates an instance with dummy mandatory attributes,
+        then uses the update method to set the real values.
+
+        Args:
+            **dictionary: Double pointer to a dictionary containing attribute
+                         names as keys and their values. The dictionary should
+                         contain all the attributes needed for the instance.
+
+        Returns:
+            Instance of the calling class with all attributes set according
+            to the dictionary values.
+
+        Examples:
+            rect_dict = {"id": 1, "width": 10, "height": 5, "x": 2, "y": 3}
+            rect = Rectangle.create(**rect_dict)
+
+            square_dict = {"id": 2, "size": 7, "x": 1, "y": 2}
+            square = Square.create(**square_dict)
+
+        Note:
+            This method uses the update() method internally, so it supports
+            the same attribute names and validation as update().
+        """
+        # Create a "dummy" instance with mandatory attributes
+        if cls.__name__ == "Rectangle":
+            # Rectangle needs width and height as mandatory parameters
+            dummy = cls(1, 1)  # Create with dummy width=1, height=1
+        elif cls.__name__ == "Square":
+            # Square needs size as mandatory parameter
+            dummy = cls(1)  # Create with dummy size=1
+        else:
+            # For Base or other classes, create without parameters
+            dummy = cls()
+
+        # Use the update method to apply real values from dictionary
+        # **dictionary expands the dictionary as keyword arguments
+        dummy.update(**dictionary)
+
+        return dummy
+
+    @classmethod
     def save_to_file(cls, list_objs):
         """
         Writes the JSON string representation of list_objs to a file.
