@@ -136,3 +136,33 @@ class Square(Rectangle):
             for key, value in kwargs.items():
                 if hasattr(self, key):
                     setattr(self, key, value)
+    # ========================================================================
+    # Dictionary representation method
+    # ========================================================================
+
+    def to_dictionary(self):
+        """
+        Returns the dictionary representation of Rectangle.
+
+        This method creates a dictionary containing all the Rectangle's
+        attributes. This is useful for:
+        - JSON serialization
+        - Creating copies of objects
+        - Updating other instances with the same attributes
+        - Data persistence
+
+        Returns:
+            dict: Dictionary containing Rectangle attributes with keys:
+                  'id', 'width', 'height', 'x', 'y'
+
+        Example:
+            rect = Rectangle(10, 2, 1, 9, 5)
+            dict_repr = rect.to_dictionary()
+        """
+        return {
+            "id": self.id,
+            "width": self.width,
+            "height": self.height,
+            "x": self.x,
+            "y": self.y
+        }
