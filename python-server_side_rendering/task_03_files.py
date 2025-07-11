@@ -18,12 +18,10 @@ app = Flask(__name__)
 # ============================================================================
 
 def read_json_data():
-    """从JSON文件读取产品数据"""
     try:
         with open('products.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        # 将字典转换为对象，便于模板访问属性
         class Product:
             def __init__(self, **kwargs):
                 for key, value in kwargs.items():
